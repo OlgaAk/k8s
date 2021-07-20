@@ -7,6 +7,7 @@ spec:
   #select pods
   selector:
     app: webapp
+    release: 0-5
 
   ports:
     - name: http
@@ -15,3 +16,21 @@ spec:
       nodePort: 30080 #should be greater than 30thd (for local develompent, not production)
 
   type: NodePort #another type is ClusterIP for internal microservices, LoadBalancer type for production
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleetman-mqueue
+
+spec:
+  selector:
+    app: mqueue
+    release: "1"
+
+  ports:
+    - name: http
+      port: 8161
+      nodePort: 30010
+
+  type: NodePort
