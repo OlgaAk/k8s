@@ -7,7 +7,6 @@ spec:
   #select pods
   selector:
     app: webapp
-    release: 0-5
 
   ports:
     - name: http
@@ -26,7 +25,6 @@ metadata:
 spec:
   selector:
     app: mqueue
-    release: "1"
 
   ports:
     - name: http

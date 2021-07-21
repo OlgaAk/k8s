@@ -24,13 +24,14 @@ Steps:
 
    create a yaml file for pod <br>
    kubectl apply -f first-pod.yaml <br>
-   kubectl apply -f . #all files <br>
+   kubectl apply -f . // all files <br>
    kubectl get all <br>
    kubectl describe pod/webapp // status info <br>
    kubectl exec webapp -- ls // show contents of the folder <br>
    kubectl -it exec webapp sh // open shell inside of contasiner <br>
    wget http://localhost:80 // request local server inside container <br>
    cat index.html // read file inside shell <br>
+   if need delete: kubectl delete po webapp
 
 4. Service
 
@@ -41,3 +42,13 @@ Steps:
    check browser http://192.168.99.100:30080 (minikube ip and port from yaml which should be greater than 30tsd) <br>
    kubectl get po --show-labels <br>
    kubectl get po --show-labels -l release=0 <br>
+
+5. ReplicaSet
+
+If a pod dies for some reason, replicaset will bring up a new one (or how many replicas were indicated) <br>
+Edit pod: put existing description under "template" field. Change Kind to Replicaset, version to apps/v1, add replica quantity, selector and name. <br>
+kubectl delete pods --all <br>
+kubectl apply -f . <br>
+kubectl get all <br>
+ReplicaSet creates a pod (or several pods, depends on how many replicas are desired) with a made-up name. If one pod crashes, another one is running and a new one is being created<br>
+kubectl describe rs webapp <br>
