@@ -45,10 +45,30 @@ Steps:
 
 5. ReplicaSet
 
-If a pod dies for some reason, replicaset will bring up a new one (or how many replicas were indicated) <br>
-Edit pod: put existing description under "template" field. Change Kind to Replicaset, version to apps/v1, add replica quantity, selector and name. <br>
-kubectl delete pods --all <br>
-kubectl apply -f . <br>
-kubectl get all <br>
-ReplicaSet creates a pod (or several pods, depends on how many replicas are desired) with a made-up name. If one pod crashes, another one is running and a new one is being created<br>
-kubectl describe rs webapp <br>
+   If a pod dies for some reason, replicaset will bring up a new one (or how many replicas were indicated) <br>
+   Edit pod: put existing description under "template" field. Change Kind to Replicaset, version to apps/v1, add replica quantity, selector and name. <br>
+   kubectl delete pods --all <br>
+   kubectl apply -f . <br>
+   kubectl get all <br>
+   ReplicaSet creates a pod (or several pods, depends on how many replicas are desired) with a made-up name. If one pod crashes, another one is running and a new one is being created<br>
+   kubectl describe rs webapp <br>
+
+6. Deployments
+
+   Deployment is more advanced than ReplicaSet, it creates a new replicaset (name + -random id) which creates pods (name + -random id + -random id)<br>
+   Deployment supports rollback (last 10 revisions), because it doesn't delete replicaset, just sets raplicas quantity to zero (if the new replica is healthy and in ready state). No downtime<br >
+   kubectl delete rs webapp <br>
+   In pods.yaml change the kind to Deployment<br>
+   kubectl apply -f pods.yaml<br>
+   Change the docker image in pod to new release and apply.<br>
+   kubectl rollout status deployment webapp<br>
+   kubectl rollout history deployment webapp<br>
+   kubectl rollout undo deployment webapp --to-revision=2<br>
+   But after rollback the yaml files don`t match the real situation! Use only in emergency<br>
+
+7. Connecting containers (ex. backend+ DB)
+
+   Backend App = Pod + Service<br>
+   DB = Pod + Service<br>
+   Kube DNS Service = key (pod name) &value (ip address) pairs
+   In Backend set db url to pod name (ex "database")
