@@ -1,4 +1,5 @@
-Kubernates Microservices Project
+Learning Kubernates <br>
+Microservices Project
 
 Steps:
 
@@ -66,9 +67,21 @@ Steps:
    kubectl rollout undo deployment webapp --to-revision=2<br>
    But after rollback the yaml files don`t match the real situation! Use only in emergency<br>
 
-7. Connecting containers (ex. backend+ DB)
+7. Connecting containers, Service discovery (ex. backend+ DB)
 
    Backend App = Pod + Service<br>
    DB = Pod + Service<br>
-   Kube DNS Service = key (pod name) &value (ip address) pairs
-   In Backend set db url to pod name (ex "database")
+   Kube DNS Service = key (pod name) &value (ip address) pairs<br>
+   Namespaces are like packages<br>
+   default namespace<br>
+   kubectl get namespaces || ns<br>
+   kubectl get all -n kube-system // shows kube dns service<br>
+
+   Create pod and service(ClusterIP) for mysql, apply<br>
+   kubectl exec -it pod/webapp-5f97db5744-gwg76 sh<br>
+   cat /etc/resolv.conf // shows namespace ip<br>
+   nslookup database // shows ip of the service named database<br>
+   install msql client inside docker container:<br>
+   apk update<br>
+   apk add mysql-client<br>
+   mysql -h database -uroot -ppassword fleetman<br>
