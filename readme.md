@@ -111,3 +111,5 @@ Steps:
 
    deploy position tracker as Deployment with a Service type ClusterIP. It starts consuming messages from ActiveMQ. Change type to NodePort to check REST API http://192.168.99.100:30020/vehicles/ // minukubeIp:nodePort/ <br>
    In the Spring app properties set are spring.activemq.broker-url=tcp://fleetman-queue:61616 // deploymentName:port<br>
+   Deploy api gateway as Deployment with a Service type ClusterIP.<br>
+   Deploy angular webapp as Deployment with a Service type NodePort. <br>
