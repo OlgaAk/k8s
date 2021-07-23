@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue
+  template:
+    metadata:
+      labels:
+        app: queue #any key/value pair, should match the selector in the service
+
+    spec:
+      containers:
+        - name: queue
+          image: richardchesterwood/k8s-fleetman-queue:release1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: position-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: position-simulator
+  template:
+    metadata:
+      labels:
+        app: position-simulator #any key/value pair, should match the selector in the service
+
+    spec:
+      containers:
+        - name: position-simulator
+          image: richardchesterwood/k8s-fleetman-position-simulator:release1
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice

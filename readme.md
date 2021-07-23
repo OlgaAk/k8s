@@ -85,3 +85,21 @@ Steps:
    apk update<br>
    apk add mysql-client<br>
    mysql -h database -uroot -ppassword fleetman<br>
+
+   Fully qualified domain names: database. default.svc.cluster.local<br>
+
+8. Microservices Architecture
+
+   A system for a transport company: Vehicles report their current position every 10sec to a server.<br>
+   Backend Part:<br>
+   1)Position Simulator Microservice (simulates real vehicles, reads data from files in infinite loop)<br>
+   2)Active MQ Microservice<br>
+   3)Posiotion Traker Microservice reads positions from Acrive MQ, calculates speed, keeps history<br>
+   Frontend<br>
+   4)Angular App<br>
+   "Middle"<br>
+   5)API Gateway - single point of entry for frontend, delegates calls to backend
+
+   kubectl delete -f .<br>
+   deploy queue as Deployment with 1 replicas, port: 61616<br>
+   deploy position-simulator as Deployment with 1 replicas, an env variable. no service needed because it only sends messages to queue<br>
