@@ -103,3 +103,11 @@ Steps:
    kubectl delete -f .<br>
    deploy queue as Deployment with 1 replicas, port: 61616<br>
    deploy position-simulator as Deployment with 1 replicas, an env variable. no service needed because it only sends messages to queue<br>
+
+   Logs
+
+   kubectl logs pod-name<br>
+   kubectl logs -f pod-name // follow logs<br>
+
+   deploy position tracker as Deployment with a Service type ClusterIP. It starts consuming messages from ActiveMQ. Change type to NodePort to check REST API http://192.168.99.100:30020/vehicles/ // minukubeIp:nodePort/ <br>
+   In the Spring app properties set are spring.activemq.broker-url=tcp://fleetman-queue:61616 // deploymentName:port<br>
