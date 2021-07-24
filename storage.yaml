@@ -1,0 +1,29 @@
+#local storage - mongo pvc
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+
+spec:
+  storageClassName: mylocalstorage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+
+---
+#Implementation
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-storage
+spec:
+  storageClassName: mylocalstorage #binds to pvc
+  capacity:
+    storage: 20Gi #important in cloud, fisical storage, should be no less than in pvc
+  accessModes:
+    - ReadWriteOnce #should be as in pvc. ReadWriteOnce is most common
+  hostPath:
+    path: /mnt/somefolder/
+    type: DirectoryOrCreate

@@ -120,3 +120,11 @@ Steps:
    Update release tags.<br>
 
    ![screenshot](./screenshot.jpg)
+
+   In order to persist data even if mongo pod crashes we need to copy data to a folder on te host machine.<br>
+   Add volumeMounts to the mongo container's spec, with a mountPath: /data/db<br>
+   Add volumes field after containers with hostPath: with type: DirectoryOrCreate and some path in virtual box (ex /mnt)<br>
+   To check if files were copied open VirtualBox, double click to open terminal, login under docker tcuser, go cd / than ls<br>
+   Move volume config to separate yaml with persistentVolumeClaim + persistentVolume, which are binded by the same storageClassName (accessmode should be the same, storage same or bigger in pv)<br>
+   kubectl get pv<br>
+   kubectl get pvc<br>

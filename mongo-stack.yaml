@@ -4,7 +4,7 @@ metadata:
   name: mongodb
 
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mongodb
@@ -17,9 +17,18 @@ spec:
       containers:
         - name: mongodb
           image: mongo:5.0.1-focal
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: production-microservice
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+
+      volumes:
+        - name: mongo-persistent-storage
+          # hostPath: #only for development, not production. -> aws
+          #   path: /mnt/somefolder/
+          #   type: DirectoryOrCreate
+          #pointer to the configuration
+          persistentVolumeClaim:
+            claimName: mongo-pvc
 
 ---
 apiVersion: v1
