@@ -113,3 +113,10 @@ Steps:
    In the Spring app properties set are spring.activemq.broker-url=tcp://fleetman-queue:61616 // deploymentName:port<br>
    Deploy api gateway as Deployment with a Service type ClusterIP.<br>
    Deploy angular webapp as Deployment with a Service type NodePort. <br>
+
+9. Persistance
+
+   Add mongo stack (deployment + service ClusteIP) with official mongo docker image<br>
+   Update release tags.<br>
+
+   ![screenshot](./screenshot.jpg)

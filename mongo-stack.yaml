@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:5.0.1-focal
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleetman-mongodb
+
+spec:
+  selector:
+    app: mongodb
+
+  ports:
+    - name: mongoport
+      port: 27017
+
+  type: ClusterIP
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: mysql
+#   labels:
+#     app: mysql
+
+# spec:
+#   containers:
+#     - name: mysql
+#       image: mysql:5
+#       env:
+#         - name: MYSQL_ROOT_PASSWORD
+#           value: password
+#         - name: MYSQL_DATABASE
+#           value: fleetman
+
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: database
+# spec:
+#   selector:
+#     app: mysql
+#   ports:
+#     - port: 3306
+#   type: ClusterIP
