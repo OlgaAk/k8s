@@ -128,3 +128,53 @@ Steps:
    Move volume config to separate yaml with persistentVolumeClaim + persistentVolume, which are binded by the same storageClassName (accessmode should be the same, storage same or bigger in pv)<br>
    kubectl get pv<br>
    kubectl get pvc<br>
+
+   10. From minikube to AWS
+
+   Create account<br>
+   Node is a fisical server (called ec2 instance)<br>
+   Master node is responsible for scheduling nodes<br>
+   Ebs - persistent volume<br>
+
+   Kops
+
+   Kops - Kubernates Operations sets up a production k8s cluster<br>
+   Insead of running kops on local machine set Linux instance in AWS<br>
+   In AWS launch instance - Amazon Linux 2 AMI (the smallest), add tag (name-bootstrap), in security select source my ip, create key pair and download. View instances, copy the public api. Open your computer terminal, copy the key pair into the folder with k8s project.<br>
+   To login run: ssh -i keypair.pem ec2-user@<copied ip address here><br>
+   (may be needed: chmod go-rwx keypair.pem)<br>
+   https://kops.sigs.k8s.io/getting_started/install/<br>
+   curl -Lo kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64<br>
+   chmod +x kops<br>
+   sudo mv kops /usr/local/bin/kops<br>
+
+   Kubectl<br>
+   https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux<br>
+   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"<br>
+   sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl<br>
+   kubectl version --client<br>
+
+   Setup IAM User<br>
+   In command line:<br>
+   aws iam create-group --group-name kops + other commands<br>
+   https://kops.sigs.k8s.io/getting_started/aws/<br>
+   Or in UI: services menu -> IAM (under Security) - Groups - Create new Group "kops" - select needed policies - create group. Under Users - Add User "kops", access type "programmatic access" - Permissions add user to Group "kops". Access key id, Secret access key.<br>
+   Run: aws configure // enter keys here<br>
+   Select region (in UI go to Services -EC2 - in upper right corner select region, search in docs for the correct corresponding name like eu-west-2)<br>
+   aws iam list-users<br>
+   export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)<br>
+   export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)<br>
+   Skip DNS section (not needed in recent versions)<br>
+
+   State storage<br>
+   Setup S3 Bucket to store data in kops<br>
+   In UI - Services - S3 - Create bucket (with a globally unique name like yourname-state-storage)<br>
+
+   Create cluster<br>
+   Env variables:<br>
+   export NAME=fleetman.k8s.local //use k8s.local!<br>
+   export KOPS_STATE_STORE=s3://yourname-state-store<br>
+   Cluster configuration: <br>
+   Check your availability zones (there are 2-4 datacenters in each region): aws ec2 describe-availability-zones --region us-west-1<br>
+   Add all zones to config comma separated:<br>
+   kops create cluster --zones [zones here] ${NAME}<br>
