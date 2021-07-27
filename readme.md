@@ -201,3 +201,7 @@ Steps:
    nano mongo-stack.yaml copy than apply<br>
    kubectl get all, kubectl describe pod/mongodb.., kubectl logs -f pod/mongodb..// successfullMountVolume, waiting for connections<br>
    nano workloads.yaml<br>
+   nano services.yaml, copy, edit, apply // change webapp type from NodePort to LoadBalancer and delete nodePort, in queue and api-gateway turn them into ClusterIP<br>
+   LoadBalancer makes a healthcheck of all instances<br>
+   To open the app in a browser: AWS UI menu - LoadBalancers - select the new one - description tab - dns name (ends with amazonaws.com)<br>
+   Register a Domain Name: menu - Services - Networking > Route 53 // 12dollars. Create Record Set for subdomain of an existing domain, type A IPv4, alias - select the relevant LoadBalancer<br>
