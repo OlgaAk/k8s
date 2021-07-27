@@ -178,3 +178,26 @@ Steps:
    Check your availability zones (there are 2-4 datacenters in each region): aws ec2 describe-availability-zones --region us-west-1<br>
    Add all zones to config comma separated:<br>
    kops create cluster --zones [zones here] ${NAME}<br>
+   ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa<br>
+   kops create secret --name ${NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub<br>
+   show cluster config: kops edit cluster ${NAME} // opens vi editor, change it "export EDITOR=nano"<br>
+   kops edit ig nodes --name ${NAME} // ig = instance groups, shows type t2.medium, minsize 2 -> change minsize=3, maxsize=5<br>
+   kops get ig --name ${NAME}<br>
+
+   Run Cluster<br>
+   kops update cluster ${NAME} --yes // with this command costs start!! delete resources after usage<br>
+   kops validate cluster // wait several minutes until no errors appear<br>
+   kops get nodes --show-labels<br>
+   In AWS UI - Services - EC2 instances list: bootstrap, master, nodes, nodes, nodes. In the menu "Load Balances" a new LB appeared with a dns name (it costs 3 cents per hour). "kubectl get all" calls the load balancer, which is pointing to the master instance, if it crashes a new master will be created.<br>
+   Menu - Autoscaling Group (if one node crashes a new one gets created)<br>
+
+   11. Deployment to AWS
+
+   To copy local files to AWS use nano inside aws console. // better use git!<br>
+   storage-aws.yaml<br>
+   In storage.yaml change the persistent volume to StorageClass than kuctl apply -f storage-aws.yaml<br>
+   kubectl get pv // a volume was created with reclaim policy Delete (if there is important data, change it)<br>
+   (AWS UI menu - Elastic Block Store - Volumes)<br>
+   nano mongo-stack.yaml copy than apply<br>
+   kubectl get all, kubectl describe pod/mongodb.., kubectl logs -f pod/mongodb..// successfullMountVolume, waiting for connections<br>
+   nano workloads.yaml<br>
