@@ -219,3 +219,24 @@ Steps:
    For env variables: history | grep export // ex 447 export NAME=fleetman.k8s.local<br>
    !447 // copy the number of a command preceded by an exclamation mark<br>
    Ctrl+R invokes reverse-i-search to find a command in history<br>
+
+   12. ELK - ElasticStack
+
+   Manual log expection when starting deployment or in emergency. <br>
+   Logs inside of container, when restarted data get lost<br>
+   ElasticStack: <br>
+
+   - Logstash/Fluentd (tool inside of node that gathers logs of containers but doesn`t store them) <br>
+   - ElasticSearch (stores data)
+   - Kibana (data visualization with graphs and chats)
+
+   AWS has an ElasticSearch Service<br>
+
+   Own setup: 2 replicas of ElasticSearch in 2 nodes, 1 kibana, fluentd on each container<br>
+   Necessary yaml configs to copy: https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch<br>
+   DaemonSet (fluentd) - like replicaset but runs on every single node.<br>
+   StatefulSet - pods have stable names<br>
+   Save yaml files and apply<br>
+   kubectl get po -n kube-system // namespace different from default<br>
+   kubectl get svc -n kube-system <br>
+   Open in browser the corresponding loadbalancer address with port 5601 and kibana dashboard should appear<br>
