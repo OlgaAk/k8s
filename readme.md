@@ -205,3 +205,17 @@ Steps:
    LoadBalancer makes a healthcheck of all instances<br>
    To open the app in a browser: AWS UI menu - LoadBalancers - select the new one - description tab - dns name (ends with amazonaws.com)<br>
    Register a Domain Name: menu - Services - Networking > Route 53 // 12dollars. Create Record Set for subdomain of an existing domain, type A IPv4, alias - select the relevant LoadBalancer<br>
+   Check which pod is using which node: kubectl get pods -o wide // column "node"<br>
+
+   Resilience<br>
+   You can make replica if a pod is stateless (otherwise you mess up your data). Queue is statefull (it contains messages), DB too. AWS has Amazon MQ and SimpleDB.<br>
+
+   Delete Cluster<br>
+   kops delete cluster --name ${NAME} --yes // in AWS UI all instances should be terminated (except bootstrap), loadbalancer and autoscaling deleted. Terminate bootstrap manually <br>
+
+   Restart Cluster<br>
+   Restart/relaunch bootstrap instance. If your IP is dynamic, in the old bootsrap - description - security groups - inbound tab - edit - set ip.<br>
+   For ssh get new ip of bootstrap: bootsrtap - description - ipv4 public ip<br>
+   For env variables: history | grep export // ex 447 export NAME=fleetman.k8s.local<br>
+   !447 // copy the number of a command preceded by an exclamation mark<br>
+   Ctrl+R invokes reverse-i-search to find a command in history<br>
