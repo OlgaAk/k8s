@@ -21,7 +21,7 @@ minikube ip <br>
 kubernates <br>
 pod - the most basic unit of deployment. usually one docker container - one pod. <br>
 
-# #3. Pod
+# 3. Pod
 
 create a yaml file for pod <br>
 
@@ -260,10 +260,17 @@ storage-aws.yaml<br>
 In storage.yaml change the persistent volume to StorageClass than kuctl apply -f storage-aws.yaml<br>
 kubectl get pv // a volume was created with reclaim policy Delete (if there is important data, change it)<br>
 (AWS UI menu - Elastic Block Store - Volumes)<br>
-nano mongo-stack.yaml copy than apply<br>
-kubectl get all, kubectl describe pod/mongodb.., kubectl logs -f pod/mongodb..// successfullMountVolume, waiting for connections<br>
-nano workloads.yaml<br>
-nano services.yaml, copy, edit, apply // change webapp type from NodePort to LoadBalancer and delete nodePort, in queue and api-gateway turn them into ClusterIP<br>
+
+```
+nano mongo-stack.yaml // copy than apply
+kubectl get all
+kubectl describe pod/mongodb..
+kubectl logs -f pod/mongodb..// successfullMountVolume, waiting for connections
+nano workloads.yaml
+nano services.yaml // copy, edit, apply change webapp type from NodePort to LoadBalancer and delete
+```
+
+nodePort, in queue and api-gateway turn them into ClusterIP<br>
 LoadBalancer makes a healthcheck of all instances<br>
 To open the app in a browser: AWS UI menu - LoadBalancers - select the new one - description tab - dns name (ends with amazonaws.com)<br>
 Register a Domain Name: menu - Services - Networking > Route 53 // 12dollars. Create Record Set for subdomain of an existing domain, type A IPv4, alias - select the relevant LoadBalancer<br>
@@ -319,9 +326,15 @@ Kibana left menu - Discover - opens a search engine on logs. In upper right corn
 Select a log and look at metadata: host, container name, pod name, namespace.<br>
 Filters:<br>
 Under search bar there are some available filters, ex. kubernates.namespace with values kube-system, default; click on the mignifiying glass<br>
+
+### Visualizations
+
 In the upper right corner - Auto Refresh feature - select an interval (min 5 sec)<br>
 Save search by clicking "Save" button in the upper right corner, give it a name<br>
 In the left menu select Visualize - Create visualization - select a type, ex Gauge - From a saved search - Options - Change range, emulate a pod crash and watch the line change. Save the visualization, give it a name<br>
+
+### Dashboards
+
 In the left menu select Dashboard - Create a dashboard - Add (choose a visualization from a list)<br>
 Create anothe visualization: Line, for x-axis select Date Histogram<br>
 Save dashboard, give it a name<br>
