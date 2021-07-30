@@ -161,7 +161,7 @@ Deploy angular webapp as Deployment with a Service type NodePort. <br>
 Add mongo stack (deployment + service ClusteIP) with official mongo docker image<br>
 Update release tags.<br>
 
-![screenshot](./screenshot.jpg)
+![screenshot](./images/screenshot.jpg)
 
 In order to persist data even if mongo pod crashes we need to copy data to a folder on te host machine.<br>
 Add volumeMounts to the mongo container's spec, with a mountPath: /data/db<br>
@@ -344,7 +344,7 @@ In the left menu select Visualize - Create visualization - select a type, ex Gau
 In the left menu select Dashboard - Create a dashboard - Add (choose a visualization from a list)<br>
 Create anothe visualization: Line, for x-axis select Date Histogram<br>
 Save dashboard, give it a name<br>
-![kibana](./kibana.png)
+![kibana](./images/kibana.png)
 
 # 13. Monitoring with Prometheus and Grafana
 
@@ -416,6 +416,6 @@ kubectl edit -n monitoring service/monitoring-grafana
 
 Login in Grafana UI admin/prom-operator<br>
 Select a dashboard ex Kubernetes/Compute Resources/Cluster
-![grafana](./grafana.png)
-![grafana2](./grafana2.png)
-![grafana3](./grafana3.png)
+![grafana](./images/grafana.png)
+![grafana2](./images/grafana2.png)
+![grafana3](./images/grafana3.png)
