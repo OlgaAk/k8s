@@ -416,9 +416,6 @@ kubectl edit -n monitoring service/monitoring-grafana
 
 Login in Grafana UI admin/prom-operator<br>
 Select a dashboard ex Kubernetes/Compute Resources/Cluster
-
-[grafana](./grafana.png)
-
-[grafana2](./grafana2.png)
-
-[grafana3](./grafana3.png)
+![grafana](./grafana.png)
+![grafana2](./grafana2.png)
+![grafana3](./grafana3.png)
