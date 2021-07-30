@@ -309,7 +309,7 @@ ElasticStack: <br>
 - ElasticSearch (stores data)
 - Kibana (data visualization with graphs and chats)
 
-### AWS has an ElasticSearch Service<br>
+AWS has an ElasticSearch Service<br>
 
 Own setup: 2 replicas of ElasticSearch in 2 nodes, 1 kibana, fluentd on each container<br>
 Necessary yaml configs to copy: https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch<br>
@@ -350,7 +350,7 @@ Save dashboard, give it a name<br>
 Monitoring is more about hardware (cpu usage, memory, network, etc)<br>
 AWS already provide monitoring: select a node (or several nodes) among instances and click on Monitoring tab. Detailed monitoring is for aditional charge.<br>
 
-##### Helm - Kubernetes package manager
+### Helm - Kubernetes package manager
 
 ###### ⚠️ Warning: following guidlines are obsolete, see Artifact Hub instead.
 
@@ -388,7 +388,7 @@ helm delete --purge mysql
 But it as better to avoid helm. Own yaml files are more transparent and you can easily rebuild your cluster in another cloud<br>
 <br>
 
-##### Prometheus
+### Prometheus
 
 Install Prometheus-Operator Chart https://github.com/helm/charts/tree/master/stable/prometheus-operator // Further development has moved to prometheus-community/helm-charts (the chart has been renamed kube-prometheus-stack)<br>
 
