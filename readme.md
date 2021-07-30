@@ -1,5 +1,6 @@
-Learning Kubernates <br>
-Microservices Project
+###### Learning Kubernates <br>
+
+###### Microservices Project
 
 Steps:
 
@@ -396,7 +397,7 @@ Install Prometheus-Operator Chart https://github.com/helm/charts/tree/master/sta
 helm install --name monitoring --namespace monitoring stable/prometheus-operator // creates a screen full of resources
 ```
 
-Check the new service/monitoring-prometheus-oper-prometheus of type ClusterIP and change it to Loadbalancer to open in browser:
+Check the new service/monitoring-prometheus-oper-prometheus of type ClusterIP and change it temporarily to Loadbalancer to open in browser:
 
 ```
 kubectl edit -n monitoring service/monitoring-prometheus-oper-prometheus // quit vim with :q and export EDITOR=nano
@@ -404,3 +405,17 @@ kubectl get all -n monitoring // copy the url of loadbalancer
 ```
 
 Prometheus UI is very basic, that is why we need Grafana on top of it. There is a list of metrics, ex node_load15 stands for cpu usage last 15 minutes.
+
+### Grafana
+
+Change Grafana service type from ClusterIP to LoadBalancer and open it in browser
+
+```
+kubectl edit -n monitoring service/monitoring-grafana
+```
+
+Login in Grafana UI admin/prom-operator<br>
+Select a dashboard ex Kubernetes/Compute Resources/Cluster
+[grafana](./grafana.png)
+[grafana](./grafana2.png)
+[grafana](./grafana3.png)
